@@ -20,3 +20,9 @@ test("registers a hit when attack matches ship position", () => {
   expect(hit).toBe(true);
   expect(ships[0].ship.hits).toBe(1);
 });
+
+test("throws error when coodinates fall outside the board", () => {
+  const board = Gameboard();
+  expect(() => board.receiveAttack(10, 5)).toThrow("Invalid coordinates");
+  expect(() => board.receiveAttack(-1, 0)).toThrow("Invalid coordinates");
+});

@@ -19,6 +19,12 @@ function Gameboard() {
   }
   //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship
   function receiveAttack(x, y) {
+    if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
+      throw new Error(
+        `Invalid coordinates: (${x}, ${y}) are outside the ${boardSize}x${boardSize} board`
+      );
+    }
+
     const shipData = ships.find((shipObj) =>
       shipObj.positions.some(([px, py]) => px === x && py === y)
     );
