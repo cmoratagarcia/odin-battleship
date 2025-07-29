@@ -15,12 +15,27 @@ function Gameboard() {
       positions.push([x, y]);
     }
 
-    ships.push({ ship, positions });
+    ships.push({ ship, positions, hitsReceived: [] });
+  }
+  //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship
+  function receiveAttack(x, y) {
+    const shipData = ships.find((shipObj) =>
+      shipObj.positions.some(([px, py]) => px === x && py === y)
+    );
+
+    if (shipData) {
+      shipData.ship.hit();
+      shipData.hitsReceived.push([x, y]);
+      return true; // hit
+    } else {
+      return false; // miss
+    }
   }
 
   return {
     placeShip,
     getShips: () => ships, // for testing
+    receiveAttack,
   };
 }
 
