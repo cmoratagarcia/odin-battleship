@@ -2,7 +2,8 @@ const Ship = require("./Ship");
 
 function Gameboard() {
   const boardSize = 10;
-  const ships = [];
+  const fleet = [];
+  const missedAttacks = [];
   //Gameboards should be able to place ships at specific coordinates by calling the ship factory or class
 
   function placeShip(length, startX, startY, direction = "horizontal") {
@@ -15,7 +16,7 @@ function Gameboard() {
       positions.push([x, y]);
     }
 
-    ships.push({ ship, positions, hitsReceived: [] });
+    fleet.push({ ship, positions, hitsReceived: [] });
   }
   //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship
   function receiveAttack(x, y) {
@@ -25,7 +26,7 @@ function Gameboard() {
       );
     }
 
-    const shipData = ships.find((shipObj) =>
+    const shipData = fleet.find((shipObj) =>
       shipObj.positions.some(([px, py]) => px === x && py === y)
     );
 
@@ -34,14 +35,16 @@ function Gameboard() {
       shipData.hitsReceived.push([x, y]);
       return true; // hit
     } else {
+      missedAttacks.push([x, y]);
       return false; // miss
     }
   }
 
   return {
     placeShip,
-    getShips: () => ships, // for testing
+    getShips: () => fleet, // for testing
     receiveAttack,
+    getMissed: () => missedAttacks, // for testing
   };
 }
 

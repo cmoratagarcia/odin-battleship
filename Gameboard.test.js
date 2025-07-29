@@ -26,3 +26,15 @@ test("throws error when coodinates fall outside the board", () => {
   expect(() => board.receiveAttack(10, 5)).toThrow("Invalid coordinates");
   expect(() => board.receiveAttack(-1, 0)).toThrow("Invalid coordinates");
 });
+
+test("tracks missed attacks", () => {
+  const board = Gameboard();
+  board.placeShip(3, 0, 0);
+  const hit = board.receiveAttack(5, 6); // miss
+  const ships = board.getShips();
+  const missed = board.getMissed();
+
+  expect(hit).toBe(false);
+  expect(ships[0].ship.hits).toBe(0);
+  expect(missed).toEqual([[5, 6]]);
+});
