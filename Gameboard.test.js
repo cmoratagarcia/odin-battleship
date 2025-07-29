@@ -38,3 +38,11 @@ test("tracks missed attacks", () => {
   expect(ships[0].ship.hits).toBe(0);
   expect(missed).toEqual([[5, 6]]);
 });
+
+test("game over when all ships sunk", () => {
+  const board = Gameboard();
+  board.placeShip(2, 0, 0);
+  board.receiveAttack(0, 0);
+  board.receiveAttack(1, 0);
+  expect(board.allSunk()).toBe(true);
+});
