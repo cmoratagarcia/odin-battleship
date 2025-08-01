@@ -1,4 +1,4 @@
-const Gameboard = require("./Gameboard");
+const Gameboard = require("../Gameboard");
 
 test("places ship at correct coordinates", () => {
   const board = Gameboard();

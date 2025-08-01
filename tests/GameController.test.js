@@ -1,4 +1,4 @@
-const GameController = require("./GameController");
+const GameController = require("../GameController");
 
 test("initializes with two players and places ships", () => {
   const game = GameController();

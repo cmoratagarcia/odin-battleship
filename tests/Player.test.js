@@ -1,4 +1,4 @@
-const Player = require("./Player");
+const Player = require("../Player");
 
 test("human player can attack and register a hit", () => {
   const player = Player("human");
