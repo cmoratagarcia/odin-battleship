@@ -19,6 +19,6 @@ cursor: pointer;
 background-color: rgb(188, 222, 230);
 }
 
-.cell:hover {
+#player2-board .cell:hover {
     background-color: rgb(27, 163, 194);
 }
