@@ -1,6 +1,6 @@
-const Ship = require("./Ship");
+import Ship from "./Ship.js";
 
-function Gameboard() {
+export default function Gameboard() {
   const boardSize = 10;
   const fleet = [];
   const missedAttacks = [];
@@ -33,18 +33,17 @@ function Gameboard() {
     if (shipData) {
       shipData.ship.hit();
       shipData.hitsReceived.push([x, y]);
-    
+
       return true; // hit
     } else {
       missedAttacks.push([x, y]);
       return false; // miss
     }
-
-    }
+  }
   //Gameboards should be able to report whether or not all of their ships have been sunk.
   function allSunk() {
-  return fleet.every((shipObj) => shipObj.ship.isSunk());
-}
+    return fleet.every((shipObj) => shipObj.ship.isSunk());
+  }
 
   return {
     placeShip,
@@ -54,5 +53,3 @@ function Gameboard() {
     allSunk,
   };
 }
-
-module.exports = Gameboard;

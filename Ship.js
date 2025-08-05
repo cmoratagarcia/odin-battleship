@@ -1,6 +1,6 @@
 //1.Begin your app by creating the Ship class/factory (your choice).
 
-function Ship(length) {
+export default function Ship(length) {
   let hits = 0;
 
   //Ships should have a hit() function that increases the number of ‘hits’ in your ship.
@@ -20,5 +20,3 @@ function Ship(length) {
     },
   };
 }
-
-module.exports = Ship;

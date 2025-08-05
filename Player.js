@@ -1,23 +1,21 @@
-const Gameboard = require("./Gameboard");
+import Gameboard from "./Gameboard.js";
 
-function Player(type = "human") {
- const board = Gameboard();
+export default function Player(type = "human") {
+  const board = Gameboard();
 
- function humanAttack(x, y, opponentBoard) {
-    return opponentBoard.receiveAttack(x,y)
- }
+  function humanAttack(x, y, opponentBoard) {
+    return opponentBoard.receiveAttack(x, y);
+  }
 
- function randomAttack(opponentBoard) {
-let x = Math.floor(Math.random() * 10);
-let y = Math.floor(Math.random() * 10);
+  function randomAttack(opponentBoard) {
+    let x = Math.floor(Math.random() * 10);
+    let y = Math.floor(Math.random() * 10);
 
-return opponentBoard.receiveAttack(x, y)
- }
+    return opponentBoard.receiveAttack(x, y);
+  }
   return {
     board,
     type,
-    attack: type === "human" ? humanAttack : randomAttack
+    attack: type === "human" ? humanAttack : randomAttack,
   };
 }
-
-module.exports = Player;
