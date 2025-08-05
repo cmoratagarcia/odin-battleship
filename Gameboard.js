@@ -2,7 +2,13 @@ import Ship from "./Ship.js";
 
 export default function Gameboard() {
   const boardSize = 10;
-  const fleet = [];
+  const fleet = [
+    { name: "Carrier", ship: Ship(5), positions: [], hitsReceived: [] },
+    { name: "Battleship", ship: Ship(4), positions: [], hitsReceived: [] },
+    { name: "Cruiser", ship: Ship(3), positions: [], hitsReceived: [] },
+    { name: "Submarine", ship: Ship(3), positions: [], hitsReceived: [] },
+    { name: "Destroyer", ship: Ship(2), positions: [], hitsReceived: [] },
+  ];
   const missedAttacks = [];
   //Gameboards should be able to place ships at specific coordinates by calling the ship factory or class
 
