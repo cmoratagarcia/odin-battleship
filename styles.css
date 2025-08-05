@@ -1,0 +1,24 @@
+.boards-container {
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    margin: 50px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50px);
+    grid-template-rows: repeat(auto-fit, 50px);
+}
+
+.cell {
+border: 1px solid black;
+cursor: pointer;
+background-color: rgb(188, 222, 230);
+}
+
+.cell:hover {
+    background-color: rgb(27, 163, 194);
+}
