@@ -24,6 +24,11 @@ export default function Gameboard() {
       for (let i = 0; i < length; i++) {
         const x = direction === "horizontal" ? startX + i : startX;
         const y = direction === "vertical" ? startY + i : startY;
+
+        for (let j = 0; j < fleet.length; j++) {
+          if (fleet[j].positions.some(([px, py]) => px === x && py === y))
+            throw new Error(`Ship overlap`);
+        }
         shipObj.positions.push([x, y]);
       }
     }
