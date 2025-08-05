@@ -10,19 +10,23 @@ export default function Gameboard() {
     { name: "Destroyer", ship: Ship(2), positions: [], hitsReceived: [] },
   ];
   const missedAttacks = [];
+
   //Gameboards should be able to place ships at specific coordinates by calling the ship factory or class
 
-  function placeShip(length, startX, startY, direction = "horizontal") {
-    const ship = Ship(length);
-    const positions = [];
+  function placeShip(name, startX, startY, direction = "horizontal") {
+    const shipObj = fleet.find((ship) => ship.name === name);
 
-    for (let i = 0; i < length; i++) {
-      const x = direction === "horizontal" ? startX + i : startX;
-      const y = direction === "vertical" ? startY + i : startY;
-      positions.push([x, y]);
+    if (!shipObj) {
+      throw new Error(`${name} not found in fleet`);
+    } else {
+      const length = shipObj.ship.length;
+
+      for (let i = 0; i < length; i++) {
+        const x = direction === "horizontal" ? startX + i : startX;
+        const y = direction === "vertical" ? startY + i : startY;
+        shipObj.positions.push([x, y]);
+      }
     }
-
-    fleet.push({ ship, positions, hitsReceived: [] });
   }
   //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship
   function receiveAttack(x, y) {
