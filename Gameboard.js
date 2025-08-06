@@ -11,6 +11,9 @@ export default function Gameboard() {
   ];
   const missedAttacks = [];
 
+  // Place ships automatically on board creation
+  autoPlaceShips();
+
   //Gameboards should be able to place ships at specific coordinates by calling the ship factory or class
 
   function placeShip(name, startX, startY, direction = "horizontal") {
