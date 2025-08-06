@@ -9,6 +9,14 @@ export default function GameController() {
 
   let currentPlayer = player1;
 
+  // Add event listeners to player2's board
+  const cells = player2Container.querySelectorAll(".cell");
+  cells.forEach((cell) => {
+    cell.addEventListener("click", () => {
+      playRound(parseInt(cell.dataset.x), parseInt(cell.dataset.y));
+    });
+  });
+
   function playRound(x, y) {
     let opponent = currentPlayer === player1 ? player2 : player1;
 
