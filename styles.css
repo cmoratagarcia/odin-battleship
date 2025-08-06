@@ -1,8 +1,18 @@
+body {
+        font-family: 'Courier New', Courier, monospace;
+}
+h1 {
+    text-align: center;
+    font-size: 30px;
+}
 .boards-container {
     display: flex;
     justify-content: center;
 }
 
+.boards-container h3 {
+    text-align: center;
+}
 .board {
     margin: 50px;
     width: 500px;
@@ -21,4 +31,8 @@ background-color: rgb(188, 222, 230);
 
 #player2-board .cell:hover {
     background-color: rgb(27, 163, 194);
+}
+
+.ship-cell {
+    background-color: purple;
 }
