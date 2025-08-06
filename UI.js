@@ -1,6 +1,4 @@
-import GameController from "./GameController.js";
-
-export default function createBoard(containerID) {
+export function createBoard(containerID) {
   const container = document.getElementById(containerID);
 
   for (let x = 0; x < 10; x++) {
@@ -12,14 +10,11 @@ export default function createBoard(containerID) {
       container.appendChild(cell);
     }
   }
-
 }
 export function renderShips(fleet, containerID) {
   fleet.forEach((shipObj) => {
     shipObj.positions.forEach(([x, y]) => {
-      const cell = containerID.querySelector(
-        `[data-x="${x}"][data-y="${y}"]`
-      );
+      const cell = containerID.querySelector(`[data-x="${x}"][data-y="${y}"]`);
       if (cell) {
         cell.classList.add("ship-cell");
       }
