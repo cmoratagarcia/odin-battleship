@@ -1,17 +1,24 @@
 import Player from "./Player.js";
-
+import { renderShips, renderHits, renderMissed } from "./UI.js";
 
 export default function GameController() {
   let player1 = Player("human");
   let player2 = Player("computer");
+  const player1Container = document.getElementById("player1-board");
+  const player2Container = document.getElementById("player2-board");
 
- 
   let currentPlayer = player1;
 
   function playRound(x, y) {
     let opponent = currentPlayer === player1 ? player2 : player1;
 
     currentPlayer.attack(x, y, opponent.board);
+
+    renderShips(player1.fleet, player1Container);
+    renderHits(player1.fleet, player1Container);
+    renderMissed(player2.missedAttacks, player1Container);
+    renderHits(player2.fleet, player2Container);
+    renderMissed(player1.missedAttacks, player2Container);
 
     //  if (isGameOver()) {
 
