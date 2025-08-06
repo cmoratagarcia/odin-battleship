@@ -33,6 +33,29 @@ export default function Gameboard() {
       }
     }
   }
+
+  function autoPlaceShips(fleet) {
+    for (vessel of fleet) {
+      let placed = false;
+
+      while (!placed) {
+        const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+
+        const maxX = direction === "horizontal" ? 10 - vessel.ship.length : 9;
+        const maxY = direction === "vertical" ? 10 - vessel.ship.length : 9;
+
+        const x = Math.floor(Math.random() * (maxX + 1));
+        const y = Math.floor(Math.random() * (maxY + 1));
+
+        try {
+          placeShip(vessel.name, x, y, direction);
+          placed = true;
+        } catch (e) {
+          // Try again
+        }
+      }
+    }
+  }
   //Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship
   function receiveAttack(x, y) {
     if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
