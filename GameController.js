@@ -1,12 +1,11 @@
 import Player from "./Player.js";
 
+
 export default function GameController() {
   let player1 = Player("human");
   let player2 = Player("computer");
 
-  player1.board.placeShip(3, 0, 0);
-  player2.board.placeShip(3, 0, 0);
-
+ 
   let currentPlayer = player1;
 
   function playRound(x, y) {
