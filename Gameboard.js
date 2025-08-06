@@ -48,7 +48,7 @@ export default function Gameboard() {
     }
   }
 
-  function autoPlaceShips(fleet) {
+  function autoPlaceShips() {
     for (const vessel of fleet) {
       let placed = false;
 
