@@ -21,3 +21,23 @@ export function renderShips(fleet, containerID) {
     });
   });
 }
+
+export function renderHits(fleet, containerID) {
+  fleet.forEach((shipObj) => {
+    shipObj.hitsReceived.forEach(([x, y]) => {
+      const cell = containerID.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+      if (cell) {
+        cell.classList.add("hit-cell");
+      }
+    });
+  });
+}
+
+export function renderMissed(missedArr, containerID) {
+  missedArr.forEach(([x, y]) => {
+         const cell = containerID.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+      if (cell) {
+        cell.classList.add("missed-cell");
+      }
+    });
+  }

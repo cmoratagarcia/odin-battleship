@@ -36,3 +36,11 @@ background-color: rgb(188, 222, 230);
 .ship-cell {
     background-color: purple;
 }
+
+.hit-cell {
+    background-color: red;
+}
+
+.missed-cell {
+     background-color: lightgray;
+}
