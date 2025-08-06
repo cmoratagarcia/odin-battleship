@@ -17,25 +17,36 @@ export default function Gameboard() {
     const shipObj = fleet.find((ship) => ship.name === name);
 
     if (!shipObj) {
-      throw new Error(`${name} not found in fleet`);
+      return false;
     } else {
       const length = shipObj.ship.length;
+      const newPositions = [];
 
       for (let i = 0; i < length; i++) {
         const x = direction === "horizontal" ? startX + i : startX;
         const y = direction === "vertical" ? startY + i : startY;
 
-        for (let j = 0; j < fleet.length; j++) {
-          if (fleet[j].positions.some(([px, py]) => px === x && py === y))
-            throw new Error(`Ship overlap`);
-        }
-        shipObj.positions.push([x, y]);
+        // Check out-of-bounds
+        if (x < 0 || x > 9 || y < 0 || y > 9) return false;
+        // Check overlap
+        if (
+          fleet.some((ship) =>
+            ship.positions.some(([px, py]) => px === x && py === y)
+          )
+        )
+          return false;
+
+        newPositions.push([x, y]);
       }
+
+      // All good – apply the positions
+      shipObj.positions = newPositions;
+      return true;
     }
   }
 
   function autoPlaceShips(fleet) {
-    for (vessel of fleet) {
+    for (const vessel of fleet) {
       let placed = false;
 
       while (!placed) {
@@ -46,13 +57,7 @@ export default function Gameboard() {
 
         const x = Math.floor(Math.random() * (maxX + 1));
         const y = Math.floor(Math.random() * (maxY + 1));
-
-        try {
-          placeShip(vessel.name, x, y, direction);
-          placed = true;
-        } catch (e) {
-          // Try again
-        }
+        placed = placeShip(vessel.name, x, y, direction);
       }
     }
   }
@@ -84,7 +89,6 @@ export default function Gameboard() {
   }
 
   return {
-    placeShip,
     getShips: () => fleet, // for testing
     receiveAttack,
     getMissed: () => missedAttacks, // for testing
