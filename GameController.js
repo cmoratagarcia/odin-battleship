@@ -35,6 +35,14 @@ export default function GameController() {
     currentPlayer = opponent;
   }
 
+  function updateUI() {
+    clearHitsAndMisses(player1Container);
+    renderHits(player1.fleet, player1Container);
+    renderMissed(player2.missedAttacks, player1Container);
+    renderHits(player2.fleet, player2Container);
+    renderMissed(player1.missedAttacks, player2Container);
+  }
+
   function isGameOver() {
     return player1.board.allSunk() || player2.board.allSunk();
   }
