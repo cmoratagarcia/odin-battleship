@@ -26,38 +26,41 @@ export default function GameController() {
     if (currentPlayer.type === "computer") {
       setTimeout(() => {
         currentPlayer.attack(opponent.board);
-        updateUI();
+
         if (!isGameOver()) {
           currentPlayer = opponent;
           if (currentPlayer.type === "computer") {
             playRound(); // loop until human, in case it's two computers
           }
         }
+        updateUI();
       }, 500);
     } else {
       currentPlayer.attack(x, y, opponent.board);
-      updateUI();
+
       if (!isGameOver()) {
         currentPlayer = opponent;
         if (currentPlayer.type === "computer") {
           playRound();
         }
       }
+      updateUI();
     }
   }
 
   function updateUI() {
     clearHitsAndMisses(player1Container);
     renderHits(player1.board.getShips(), player1Container);
-    renderMissed(player2.board.getMissed(), player1Container);
+    renderMissed(player1.board.getMissed(), player1Container);
     renderHits(player2.board.getShips(), player2Container);
-    renderMissed(player1.board.getMissed(), player2Container);
+    renderMissed(player2.board.getMissed(), player2Container);
 
     const turnIndicator = document.getElementById("turn-indicator");
     if (turnIndicator) {
       turnIndicator.textContent = `Turn: ${currentPlayer.type}`;
     }
   }
+
   function isGameOver() {
     return player1.board.allSunk() || player2.board.allSunk();
   }
