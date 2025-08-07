@@ -1,5 +1,5 @@
 import Player from "./Player.js";
-import { renderShips, renderHits, renderMissed } from "./UI.js";
+import { renderHits, renderMissed, clearHitsAndMisses } from "./UI.js";
 
 export default function GameController() {
   let player1 = Player("human");
@@ -13,6 +13,7 @@ export default function GameController() {
   const cells = player2Container.querySelectorAll(".cell");
   cells.forEach((cell) => {
     cell.addEventListener("click", () => {
+      if (currentPlayer.type !== "human") return;
       playRound(parseInt(cell.dataset.x), parseInt(cell.dataset.y));
     });
   });
@@ -22,7 +23,7 @@ export default function GameController() {
 
     currentPlayer.attack(x, y, opponent.board);
 
-    renderShips(player1.fleet, player1Container);
+    clearHitsAndMisses(player1Container);
     renderHits(player1.fleet, player1Container);
     renderMissed(player2.missedAttacks, player1Container);
     renderHits(player2.fleet, player2Container);
