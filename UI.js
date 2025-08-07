@@ -35,9 +35,15 @@ export function renderHits(fleet, containerID) {
 
 export function renderMissed(missedArr, containerID) {
   missedArr.forEach(([x, y]) => {
-         const cell = containerID.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-      if (cell) {
-        cell.classList.add("missed-cell");
-      }
-    });
-  }
+    const cell = containerID.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+    if (cell) {
+      cell.classList.add("missed-cell");
+    }
+  });
+}
+
+export function clearHitsAndMisses(container) {
+  container.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("hit-cell", "missed-cell");
+  });
+}
