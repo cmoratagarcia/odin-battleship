@@ -72,6 +72,17 @@ export default function Gameboard() {
       );
     }
 
+    // Check if already attacked
+    const alreadyAttacked =
+      missedAttacks.some(([mx, my]) => mx === x && my === y) ||
+      fleet.some((shipObj) =>
+        shipObj.hitsReceived.some(([hx, hy]) => hx === x && hy === y)
+      );
+
+    if (alreadyAttacked) {
+      return null; // already attacked
+    }
+
     const shipData = fleet.find((shipObj) =>
       shipObj.positions.some(([px, py]) => px === x && py === y)
     );

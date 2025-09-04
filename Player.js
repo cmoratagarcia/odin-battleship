@@ -8,10 +8,14 @@ export default function Player(type = "human") {
   }
 
   function randomAttack(opponentBoard) {
-    let x = Math.floor(Math.random() * 10);
-    let y = Math.floor(Math.random() * 10);
-
-    return opponentBoard.receiveAttack(x, y);
+    let result = null;
+    while (result === null) {
+      //keep trying if already hit
+      let x = Math.floor(Math.random() * 10);
+      let y = Math.floor(Math.random() * 10);
+      result = opponentBoard.receiveAttack(x, y);
+    }
+    return result;
   }
   return {
     board,
