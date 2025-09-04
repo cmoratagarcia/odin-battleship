@@ -6,6 +6,7 @@ export default function GameController() {
   let player2 = Player("computer");
   const player1Container = document.getElementById("player1-board");
   const player2Container = document.getElementById("player2-board");
+  const turnIndicator = document.getElementById("turn-indicator");
 
   let currentPlayer = player1;
 
@@ -27,7 +28,10 @@ export default function GameController() {
       setTimeout(() => {
         currentPlayer.attack(opponent.board);
 
-        if (!isGameOver()) {
+        if (isGameOver()) {
+          updateUI();
+          handleGameOver();
+        } else {
           currentPlayer = opponent;
           if (currentPlayer.type === "computer") {
             playRound(); // loop until human, in case it's two computers
@@ -38,13 +42,16 @@ export default function GameController() {
     } else {
       currentPlayer.attack(x, y, opponent.board);
 
-      if (!isGameOver()) {
+      if (isGameOver()) {
+        updateUI();
+        handleGameOver();
+      } else {
         currentPlayer = opponent;
         if (currentPlayer.type === "computer") {
           playRound();
+          updateUI();
         }
       }
-      updateUI();
     }
   }
 
@@ -55,7 +62,6 @@ export default function GameController() {
     renderHits(player2.board.getShips(), player2Container);
     renderMissed(player2.board.getMissed(), player2Container);
 
-    const turnIndicator = document.getElementById("turn-indicator");
     if (turnIndicator) {
       turnIndicator.textContent = `Turn: ${currentPlayer.type}`;
     }
@@ -63,6 +69,11 @@ export default function GameController() {
 
   function isGameOver() {
     return player1.board.allSunk() || player2.board.allSunk();
+  }
+
+  function handleGameOver() {
+    const winner = player1.board.allSunk() ? "Computer" : "Human";
+    turnIndicator.textContent = `Game Over! ${winner} wins!`;
   }
   return {
     playRound,
