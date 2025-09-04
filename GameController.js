@@ -2,7 +2,7 @@ import Player from "./Player.js";
 import { renderHits, renderMissed, clearHitsAndMisses } from "./UI.js";
 
 export default function GameController() {
-  let gameIsOver = false;
+  let gameOver = false;
   let player1 = Player("human");
   let player2 = Player("computer");
   const player1Container = document.getElementById("player1-board");
@@ -16,6 +16,7 @@ export default function GameController() {
     const cells = player2Container.querySelectorAll(".cell");
     cells.forEach((cell) => {
       cell.addEventListener("click", () => {
+        if (gameOver) return;
         if (currentPlayer.type !== "human") return;
         playRound(parseInt(cell.dataset.x), parseInt(cell.dataset.y));
       });
@@ -23,37 +24,50 @@ export default function GameController() {
   }
 
   function playRound(x, y) {
-    if (gameIsOver) return;
+    if (gameOver) return;
+
     const opponent = currentPlayer === player1 ? player2 : player1;
 
     if (currentPlayer.type === "computer") {
       setTimeout(() => {
-        currentPlayer.attack(opponent.board);
+        currentPlayer.attack(opponent.board); // computer's randomAttack already avoids duplicates
 
         if (isGameOver()) {
-          updateUI();
           handleGameOver();
-        } else {
-          currentPlayer = opponent;
-          if (currentPlayer.type === "computer") {
-            playRound(); // loop until human, in case it's two computers
-          }
+          updateUI();
+
+          return;
+        }
+
+        currentPlayer = opponent;
+        if (currentPlayer.type === "computer") {
+          playRound(); // loop until human, in case it's two computers
         }
         updateUI();
       }, 500);
     } else {
-      currentPlayer.attack(x, y, opponent.board);
+      // human attack can return true/false/null
+      const result = currentPlayer.attack(x, y, opponent.board);
+
+      if (result === null) {
+        // already attacked this cell: do NOT switch turns
+        turnIndicator.textContent = "Already attacked this cell!";
+        return;
+      }
 
       if (isGameOver()) {
-        updateUI();
         handleGameOver();
-      } else {
-        currentPlayer = opponent;
-        if (currentPlayer.type === "computer") {
-          playRound();
-          updateUI();
-        }
+        updateUI();
+        return;
       }
+
+      currentPlayer = opponent;
+
+      if (currentPlayer.type === "computer") {
+        playRound();
+      }
+
+      updateUI();
     }
   }
 
@@ -64,7 +78,12 @@ export default function GameController() {
     renderHits(player2.board.getShips(), player2Container);
     renderMissed(player2.board.getMissed(), player2Container);
 
-    if (turnIndicator) {
+    if (!turnIndicator) return;
+
+    if (gameOver) {
+      const winner = player1.board.allSunk() ? "Computer" : "Human";
+      turnIndicator.textContent = `Game Over! ${winner} wins!`;
+    } else {
       turnIndicator.textContent = `Turn: ${currentPlayer.type}`;
     }
   }
@@ -74,9 +93,7 @@ export default function GameController() {
   }
 
   function handleGameOver() {
-    gameIsOver = true;
-    const winner = player1.board.allSunk() ? "Computer" : "Human";
-    turnIndicator.textContent = `Game Over! ${winner} wins!`;
+    gameOver = true;
   }
   return {
     playRound,
