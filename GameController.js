@@ -2,6 +2,7 @@ import Player from "./Player.js";
 import { renderHits, renderMissed, clearHitsAndMisses } from "./UI.js";
 
 export default function GameController() {
+  let gameIsOver = false;
   let player1 = Player("human");
   let player2 = Player("computer");
   const player1Container = document.getElementById("player1-board");
@@ -22,6 +23,7 @@ export default function GameController() {
   }
 
   function playRound(x, y) {
+    if (gameIsOver) return;
     const opponent = currentPlayer === player1 ? player2 : player1;
 
     if (currentPlayer.type === "computer") {
@@ -72,6 +74,7 @@ export default function GameController() {
   }
 
   function handleGameOver() {
+    gameIsOver = true;
     const winner = player1.board.allSunk() ? "Computer" : "Human";
     turnIndicator.textContent = `Game Over! ${winner} wins!`;
   }
