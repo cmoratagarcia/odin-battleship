@@ -54,7 +54,18 @@ export default function GameController() {
         turnIndicator.textContent = "Already attacked this cell!";
         return;
       }
-
+      if (result.sunk) {
+        // Highlight sunk ship
+        result.sunk.positions.forEach(([sx, sy]) => {
+          const sunkCell = document.querySelector(
+            `#${
+              opponent.type === "human" ? "player1-board" : "player2-board"
+            } .cell[data-x="${sx}"][data-y="${sy}"]`
+          );
+          sunkCell.classList.add("sunk-cell");
+          sunkCell.textContent = "X";
+        });
+      }
       if (isGameOver()) {
         handleGameOver();
         updateUI();

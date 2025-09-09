@@ -91,10 +91,15 @@ export default function Gameboard() {
       shipData.ship.hit();
       shipData.hitsReceived.push([x, y]);
 
-      return true; // hit
+      // If the ship just got sunk, let GameController know
+      if (shipData.ship.isSunk()) {
+        return { hit: true, sunk: shipData };
+      }
+
+      return { hit: true, sunk: null }; // just a hit, not sunk yet
     } else {
       missedAttacks.push([x, y]);
-      return false; // miss
+      return { hit: false, sunk: null };
     }
   }
   //Gameboards should be able to report whether or not all of their ships have been sunk.
