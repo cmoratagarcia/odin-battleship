@@ -30,7 +30,19 @@ export default function GameController() {
 
     if (currentPlayer.type === "computer") {
       setTimeout(() => {
-        currentPlayer.attack(opponent.board); // computer's randomAttack already avoids duplicates
+        const result = currentPlayer.attack(opponent.board);
+
+        if (result?.sunk) {
+          result.sunk.positions.forEach(([sx, sy]) => {
+            const sunkCell = document.querySelector(
+              `#${
+                opponent.type === "human" ? "player1-board" : "player2-board"
+              } .cell[data-x="${sx}"][data-y="${sy}"]`
+            );
+            sunkCell.classList.add("sunk-cell");
+            sunkCell.textContent = "X";
+          });
+        }
 
         if (isGameOver()) {
           handleGameOver();
