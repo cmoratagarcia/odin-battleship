@@ -78,6 +78,8 @@ border: 1px solid black;
 cursor: pointer;
 background-color: rgb(188, 222, 230);
 display: flex;
+ align-items: center;
+  justify-content: center;
 }
 
 #player2-board .cell:hover {
@@ -99,7 +101,5 @@ display: flex;
 .sunk-cell {
   background-color: #a76c6c !important;
   color: white;
-  font-size: 35px;
-  align-items: center;
-  justify-content: center;
+  font-size: 28px;
 }
