@@ -68,7 +68,11 @@ header {
   border-radius: 6px;
   overflow: hidden;
 }
-
+.active-board {
+  border: 3px solid gold;
+  box-shadow: 0 0 10px gold;
+  transition: all 0.3s ease-in-out;
+}
 .cell {
 border: 1px solid black;
 cursor: pointer;

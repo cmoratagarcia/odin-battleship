@@ -84,6 +84,8 @@ export default function GameController() {
 
   function updateUI() {
     clearHitsAndMisses(player1Container);
+    player1Container.classList.remove("active-board");
+    player2Container.classList.remove("active-board");
     renderHits(player1.board.getShips(), player1Container);
     renderMissed(player1.board.getMissed(), player1Container);
     renderHits(player2.board.getShips(), player2Container);
@@ -96,6 +98,9 @@ export default function GameController() {
       turnIndicator.textContent = `Game Over! ${winner} wins!`;
     } else {
       turnIndicator.textContent = `Turn: ${currentPlayer.type}`;
+      currentPlayer === player1
+        ? player2Container.classList.add("active-board")
+        : player1Container.classList.add("active-board");
     }
   }
 
