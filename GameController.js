@@ -1,5 +1,10 @@
 import Player from "./Player.js";
-import { renderHits, renderMissed, clearHitsAndMisses } from "./UI.js";
+import {
+  renderHits,
+  renderMissed,
+  clearHitsAndMisses,
+  renderSunkShip,
+} from "./UI.js";
 
 export default function GameController() {
   let gameOver = false;
@@ -33,15 +38,9 @@ export default function GameController() {
         const result = currentPlayer.attack(opponent.board);
 
         if (result?.sunk) {
-          result.sunk.positions.forEach(([sx, sy]) => {
-            const sunkCell = document.querySelector(
-              `#${
-                opponent.type === "human" ? "player1-board" : "player2-board"
-              } .cell[data-x="${sx}"][data-y="${sy}"]`
-            );
-            sunkCell.classList.add("sunk-cell");
-            sunkCell.textContent = "X";
-          });
+          const container =
+            currentPlayer === player1 ? player2Container : player1Container;
+          renderSunkShip(result.sunk, container);
         }
 
         if (isGameOver()) {
@@ -66,17 +65,10 @@ export default function GameController() {
         turnIndicator.textContent = "Already attacked this cell!";
         return;
       }
-      if (result.sunk) {
-        // Highlight sunk ship
-        result.sunk.positions.forEach(([sx, sy]) => {
-          const sunkCell = document.querySelector(
-            `#${
-              opponent.type === "human" ? "player1-board" : "player2-board"
-            } .cell[data-x="${sx}"][data-y="${sy}"]`
-          );
-          sunkCell.classList.add("sunk-cell");
-          sunkCell.textContent = "X";
-        });
+      if (result?.sunk) {
+        const container =
+          currentPlayer === player1 ? player2Container : player1Container;
+        renderSunkShip(result.sunk, container);
       }
       if (isGameOver()) {
         handleGameOver();

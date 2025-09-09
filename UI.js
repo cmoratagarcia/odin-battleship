@@ -47,3 +47,13 @@ export function clearHitsAndMisses(container) {
     cell.classList.remove("hit-cell", "missed-cell");
   });
 }
+
+export function renderSunkShip(ship, container) {
+  ship.positions.forEach(([x, y]) => {
+    const cell = container.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+    if (cell) {
+      cell.classList.add("sunk-cell");
+      cell.textContent = "X";
+    }
+  });
+}

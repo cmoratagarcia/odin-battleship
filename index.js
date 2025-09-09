@@ -17,7 +17,6 @@ function initGame() {
 
   // Render ships
   renderShips(game.player1.board.getShips(), player1Container);
-  renderShips(game.player2.board.getShips(), player2Container); //For testing, to be deleted
 
   return game;
 }

@@ -90,7 +90,7 @@ display: flex;
     background-color: rgb(2, 1, 75);
 }
 
-.ship-cell.hit-cell {
+.hit-cell {
   background-color: crimson;
 }
 
